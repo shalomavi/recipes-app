@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Recipe Keeper</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Qwitcher+Grypen:wght@700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <header>
+        <h1>Recipe Keeper</h1>
+    </header>
+
+    <main>
+        <div id="formArea">
+            <h2><i class="fas fa-receipt fa-xs"></i> Add a New Recipe</h2>
+            <form id="recipe-form">
+                <label for="recipe-name">Recipe Name:</label>
+                <input type="text" id="recipe-name" name="recipe-name" placeholder="Enter recipe name here">
+                <label for="ingredients">Ingredients:</label>
+                <textarea id="ingredients" placeholder="List ingredients separated by commas"></textarea>
+                <label for="steps">Steps:</label>
+                <textarea id="steps" placeholder="Steps for preparation" rows="6"></textarea>
+                <label for="recipeUrl">Recipe Image URL:</label>
+                <input type="url" id="recipeUrl" name="recipeUrl" placeholder="http://example.com/my-dish.jpg">
+                <button type="submit" id="submitBtn">Add Recipe</button>
+            </form>
+        </div>
+
+        <div id="displayAreaDiv">
+            <h2><i class="fas fa-list-ol fa-xs"></i> Your Recipes</h2>
+            <section id="display-area">
+            </section>
+        </div>
+    </main>
+
+    <script src="scripts.js"></script>
+    <script src="https://use.fontawesome.com/releases/vVERSION/js/all.js" data-auto-replace-svg="nest"></script>
+</body>
+
+</html>
