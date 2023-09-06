@@ -1,72 +1,73 @@
+// Define constants and DOM elements at the beginning
 const recipeForm = document.getElementById('recipe-form');
 const recipeName = document.getElementById('recipe-name');
 const ingredients = document.getElementById('ingredients');
 const steps = document.getElementById('steps');
 const recipeUrl = document.getElementById('recipeUrl');
 const displayArea = document.getElementById('display-area');
+const apiUrl = 'http://127.0.0.1:8000/recipes';
+
+// Initialize an empty array for recipes
 let recipes = [];
 
+// Fetch recipes and add event listeners
 fetchRecipes();
 addRecipe();
 
-function fetchRecipes() {
-    if (localStorage.getItem('recipes')) {
-        recipes = JSON.parse(localStorage.getItem('recipes'));
+// Function to fetch recipes from the server
+async function fetchRecipes() {
+    try {
+        const response = await fetch(apiUrl);
+        if (response.ok) {
+            recipes = await response.json();
+            refreshDisplay();
+        } else {
+            console.error("Failed to fetch recipes from the server");
+        }
+    } catch (error) {
+        console.error("ERROR:", error.message);
     }
-    recipes.forEach((recipe, index) => {
-        displayRecipe(recipe, index);
-    });
 }
 
-function saveRecipesToLocalStorage() {
-    localStorage.setItem('recipes', JSON.stringify(recipes));
-}
-
-function addRecipe() {
-    recipeForm.addEventListener('submit', function (event) {
+// Function to create a new recipe
+async function addRecipe() {
+    recipeForm.addEventListener('submit', async function (event) {
         event.preventDefault();
         const enteredRecipeName = recipeName.value;
-        const enteredIngredients = ingredients.value;
-        const enteredSteps = addLineBreaksAfterDigits(steps.value);
-        const enteredrecipeUrl = recipeUrl.value;
-
-        const enteredIngredientsArr = enteredIngredients.split(',');
+        const enteredIngredients = ingredients.value.split(',');
+        const enteredSteps = steps.value;
+        const enteredRecipeUrl = recipeUrl.value || "https://cdn.dribbble.com/users/5393625/screenshots/18264661/media/a4a178d24054ad1712c25c52596adb01.jpg"
         const newRecipe = {
             name: enteredRecipeName,
-            ingredients: enteredIngredientsArr,
+            ingredients: enteredIngredients,
             steps: enteredSteps,
-            url: enteredrecipeUrl,
+            url: enteredRecipeUrl,
         };
 
-        recipes.push(newRecipe);
-        saveRecipesToLocalStorage();
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newRecipe),
+            });
 
-        clearFormFields();
-        displayRecipe(newRecipe, recipes.length - 1);
+            if (response.ok) {
+                const createdRecipe = await response.json();
+                recipes.push(createdRecipe);
+                clearFormFields();
+                refreshDisplay();
+            } else {
+                console.error("Failed to create recipe on the server");
+            }
+        } catch (error) {
+            console.error("ERROR:", error.message);
+        }
     });
 }
 
-function addLineBreaksAfterDigits(inputString) {
-    let result = '';
-
-    for (let i = 0; i < inputString.length; i++) {
-
-
-        if (isDigit(inputString[i]) && i > 0) {
-            result += '\n'; // Add a newline character
-        }
-
-        result += inputString[i];
-    }
-
-    return result;
-}
-
-function isDigit(char) {
-    return !isNaN(parseInt(char));
-}
-
-
+// Function to clear form fields
 function clearFormFields() {
     recipeName.value = '';
     ingredients.value = '';
@@ -74,6 +75,7 @@ function clearFormFields() {
     recipeUrl.value = '';
 }
 
+// Function to create an image element
 function createImageElement(url) {
     const img = document.createElement('img');
     img.src = url;
@@ -81,12 +83,14 @@ function createImageElement(url) {
     return img;
 }
 
+// Function to create a text element
 function createTextElement(tagName, text) {
     const element = document.createElement(tagName);
     element.textContent = text;
     return element;
 }
 
+// Function to create a list element for ingredients
 function createListElement(ingredients) {
     const list = document.createElement('ul');
     ingredients.forEach(ingredient => {
@@ -97,7 +101,8 @@ function createListElement(ingredients) {
     return list;
 }
 
-function displayRecipe(recipe, index) {
+// Function to display a recipe
+function displayRecipe(recipe) {
     const recipeDiv = document.createElement('div');
     recipeDiv.classList.add('recipeDiv');
 
@@ -110,6 +115,7 @@ function displayRecipe(recipe, index) {
 
     const stepsParagraph = document.createElement('p');
     const stepsLines = recipe.steps.split('\n');
+
     stepsLines.forEach(line => {
         const stepLine = document.createElement('span');
         stepLine.textContent = line;
@@ -118,43 +124,59 @@ function displayRecipe(recipe, index) {
     });
     recipeDiv.appendChild(stepsParagraph);
 
-    recipeDiv.appendChild(createDeleteButton(index));
-    recipeDiv.appendChild(createUpdateButton(index, recipeDiv));
+    recipeDiv.appendChild(createActionButton('Delete', 'deleteBtn', () => deleteRecipe(recipe)));
+    recipeDiv.appendChild(createActionButton('Update', 'updateBtn', () => showUpdateForm(recipe, recipeDiv)));
 
     displayArea.appendChild(recipeDiv);
 }
 
-
-function createDeleteButton(index) {
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.classList.add('deleteBtn');
-    deleteButton.onclick = function () {
-        deleteRecipe(index);
-    };
-    return deleteButton;
+// Function to create an action button
+function createActionButton(text, className, clickHandler) {
+    const button = document.createElement('button');
+    button.textContent = text;
+    button.classList.add(className);
+    button.addEventListener('click', clickHandler);
+    return button;
 }
 
-function createUpdateButton(index, recipeDiv) {
-    const updateButton = document.createElement('button');
-    updateButton.textContent = 'Update';
-    updateButton.classList.add('updateBtn');
-    updateButton.onclick = function () {
-        showUpdateForm(index, recipeDiv);
-    };
-    return updateButton;
+// Function to delete a recipe
+async function deleteRecipe(recipeToDelete) {
+    const recipeIndex = recipes.findIndex(recipe => recipe.id === recipeToDelete.id);
+    if (recipeIndex !== -1) {
+        try {
+            const response = await fetch(`${apiUrl}/${recipeToDelete.id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                console.log("Recipe deleted successfully on server.");
+                recipes.splice(recipeIndex, 1);
+                refreshDisplay();
+            } else {
+                console.error("Failed to delete recipe on the server");
+            }
+        } catch (error) {
+            console.error("ERROR:", error.message);
+        }
+    }
 }
 
-function showUpdateForm(index, recipeDiv) {
-    clearDiv(recipeDiv);
+// Function to clear the display area
+function clearDisplayArea() {
+    while (displayArea.firstChild) {
+        displayArea.removeChild(displayArea.firstChild);
+    }
+}
 
-    const updatedRecipe = recipes[index];
-    const nameInput = createInput('input', updatedRecipe.name);
-    const ingredientsInput = createInput('input', updatedRecipe.ingredients.join(','));
-    const stepsInput = createInput('textarea', updatedRecipe.steps);
-    const urlInput = createInput('input', updatedRecipe.url);
-    const saveButton = createSaveButton(index, nameInput, ingredientsInput, stepsInput, urlInput, recipeDiv);
+// Function to show the update form
+function showUpdateForm(recipeToUpdate, recipeDiv) {
+    const nameInput = createInput('input', recipeToUpdate.name);
+    const ingredientsInput = createInput('input', recipeToUpdate.ingredients.join(','));
+    const stepsInput = createInput('textarea', recipeToUpdate.steps);
+    const urlInput = createInput('input', recipeToUpdate.url);
+    const saveButton = createActionButton('Save Changes', 'saveBtn', () => updateRecipe(recipeToUpdate, nameInput, ingredientsInput, stepsInput, urlInput, recipeDiv));
 
+    recipeDiv.innerHTML = ''; // Clear the div
     recipeDiv.appendChild(createTextElement('h3', 'Recipe Name'));
     recipeDiv.appendChild(nameInput);
     recipeDiv.appendChild(createTextElement('h3', 'Ingredients'));
@@ -166,75 +188,52 @@ function showUpdateForm(index, recipeDiv) {
     recipeDiv.appendChild(saveButton);
 }
 
-function createSaveButton(index, nameInput, ingredientsInput, stepsInput, urlInput, recipeDiv) {
-    const saveButton = document.createElement('button');
-    saveButton.textContent = 'Save Changes';
-    saveButton.classList.add('saveBtn');
-
-    saveButton.onclick = function () {
-        recipes[index].name = nameInput.value;
-        recipes[index].ingredients = ingredientsInput.value.split(',');
-        recipes[index].steps = stepsInput.value;
-        recipes[index].url = urlInput.value;
-
-        displayUpdatedRecipe(index, recipeDiv);
-        saveRecipesToLocalStorage();
+// Function to update a recipe
+async function updateRecipe(recipeToUpdate, nameInput, ingredientsInput, stepsInput, urlInput, recipeDiv) {
+    const updatedRecipe = {
+        name: nameInput.value,
+        ingredients: ingredientsInput.value.split(','),
+        steps: stepsInput.value,
+        url: urlInput.value,
+        id: recipeToUpdate.id, // Include the ID
     };
-    return saveButton;
-}
 
-function displayUpdatedRecipe(index, recipeDiv) {
-    clearDiv(recipeDiv);
-    const updatedRecipe = recipes[index];
+    try {
+        const response = await fetch(`${apiUrl}/${recipeToUpdate.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedRecipe),
+        });
 
-    recipeDiv.appendChild(createImageElement(updatedRecipe.url)); // Display the updated image
-    recipeDiv.appendChild(createTextElement('h3', 'Recipe Name'));
-    recipeDiv.appendChild(createTextElement('p', updatedRecipe.name));
-    recipeDiv.appendChild(createTextElement('h3', 'Ingredients'));
-    recipeDiv.appendChild(createListElement(updatedRecipe.ingredients));
-    recipeDiv.appendChild(createTextElement('h3', 'Steps'));
-
-    const stepsParagraph = document.createElement('p');
-    const stepsLines = updatedRecipe.steps.split('\n');
-    stepsLines.forEach(line => {
-        const stepLine = document.createElement('span');
-        stepLine.textContent = line;
-        stepsParagraph.appendChild(stepLine);
-        stepsParagraph.appendChild(document.createElement('br'));
-    });
-    recipeDiv.appendChild(stepsParagraph);
-
-    recipeDiv.appendChild(createDeleteButton(index));
-    recipeDiv.appendChild(createUpdateButton(index, recipeDiv));
-}
-
-
-
-function deleteRecipe(index) {
-    if (index >= 0 && index < recipes.length) {
-        recipes.splice(index, 1);
-        refreshDisplay();
+        if (response.ok) {
+            console.log("Recipe updated successfully on the server.");
+            const updatedRecipeData = await response.json();
+            const recipeIndex = recipes.findIndex(recipe => recipe.id === updatedRecipeData.id);
+            if (recipeIndex !== -1) {
+                recipes[recipeIndex] = updatedRecipeData;
+            }
+            clearDisplayArea();
+            recipes.forEach(displayRecipe);
+        } else {
+            console.error("Failed to update recipe on the server");
+        }
+    } catch (error) {
+        console.error("ERROR:", error.message);
     }
-    saveRecipesToLocalStorage();
 }
 
-function refreshDisplay() {
-    displayArea.innerHTML = '';
-    recipes.forEach((recipe, newIndex) => {
-        displayRecipe(recipe, newIndex);
-    });
-}
-
+// Function to create an input element
 function createInput(type, value) {
     const input = document.createElement(type);
-    input.type = 'text'; // Set the input type to text
+    input.setAttribute("type", "text");
     input.value = value;
     return input;
 }
 
-
-function clearDiv(recipeDiv) {
-    while (recipeDiv.firstChild) {
-        recipeDiv.removeChild(recipeDiv.firstChild);
-    }
+// Function to refresh the display area
+function refreshDisplay() {
+    clearDisplayArea();
+    recipes.forEach(displayRecipe);
 }

@@ -23,24 +23,33 @@
             <form id="recipe-form">
                 <label for="recipe-name">Recipe Name:</label>
                 <input type="text" id="recipe-name" name="recipe-name" placeholder="Enter recipe name here">
-                <label for="ingredients">Ingredients:</label>
-                <textarea id="ingredients" placeholder="List ingredients separated by commas"></textarea>
-                <label for="steps">Steps:</label>
-                <textarea id="steps" placeholder="Steps for preparation" rows="6"></textarea>
-                <label for="recipeUrl">Recipe Image URL:</label>
-                <input type="url" id="recipeUrl" name="recipeUrl" placeholder="http://example.com/my-dish.jpg">
+                <label for="recipe-ingredients">Ingredients:</label>
+                <textarea id="recipe-ingredients" placeholder="List ingredients separated by commas"></textarea>
+                <label for="recipe-steps">Steps:</label>
+                <textarea id="recipe-steps" placeholder="Steps for preparation" rows="6"></textarea>
+                <label for="recipe-url">Recipe Image URL:</label>
+                <input type="url" id="recipe-url" name="recipe-url" placeholder="http://example.com/my-dish.jpg">
                 <button type="submit" id="submitBtn">Add Recipe</button>
             </form>
         </div>
 
         <div id="displayAreaDiv">
+            <div class="search-container">
+                <h2><i class="fas fa-search fa-xs"></i> Search For Recipes </h2>
+                <form id="searchForm">
+                    <input type="text" id="search-input" name="search-input" placeholder="Search for recipes...">
+                    <button type="submit" id="searchBtn">Search</button>
+                </form>
+            </div>
+
             <h2><i class="fas fa-list-ol fa-xs"></i> Your Recipes</h2>
             <section id="display-area">
             </section>
         </div>
     </main>
 
-    <script src="scripts.js"></script>
+    <!-- <script src="scripts.js"></script> -->
+    <script src="newscripts.js"></script>
     <script src="https://use.fontawesome.com/releases/vVERSION/js/all.js" data-auto-replace-svg="nest"></script>
 </body>
 
