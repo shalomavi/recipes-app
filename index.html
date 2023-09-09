@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Qwitcher+Grypen:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css">
+
 
 </head>
 
@@ -31,6 +33,8 @@
                 <input type="url" id="recipe-url" name="recipe-url" placeholder="http://example.com/my-dish.jpg">
                 <button type="submit" id="submitBtn">Add Recipe</button>
             </form>
+            <h2><i class="far fa-calendar-alt fa-xs"></i> Calendar</h2>
+            <div id="calendar"></div>
         </div>
 
         <div id="displayAreaDiv">
@@ -46,11 +50,16 @@
             <section id="display-area">
             </section>
         </div>
+
     </main>
 
     <!-- <script src="scripts.js"></script> -->
     <script src="newscripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.min.js"></script>
+
     <script src="https://use.fontawesome.com/releases/vVERSION/js/all.js" data-auto-replace-svg="nest"></script>
+
 </body>
 
 </html>
