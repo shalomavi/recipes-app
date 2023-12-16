@@ -30,7 +30,7 @@ Responsive Design: 📱 Ensures a seamless experience across various devices for
    ```
 
 ## 🎬 Usage
-- Run
+- Run the backend server
    ```sh
    python main.py
    ```
