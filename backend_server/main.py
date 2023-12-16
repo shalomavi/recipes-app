@@ -4,10 +4,9 @@ API for Recipe Keeper Application.
 This module provides endpoints for CRUD operations on recipes.
 It uses a JSON file for storage, and FastAPI for the web server.
 """
-
+from datetime import date
 import os.path
 import json
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -61,12 +60,16 @@ class Recipe(BaseModel):
         id (int): Recipe identifier.
         name (str): Name of the recipe.
         ingredients (list[str]): List of ingredients for the recipe.
+        url (str): Url of recipe image.
+        date (date): Date of scheduling the date of making the recipe.
+
     """
     id: int = None
     name: str
     ingredients: list[str]
     steps: str
     url: str
+    recipe_date: str = None
 
 
 @app.get("/recipes")

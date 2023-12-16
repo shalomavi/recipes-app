@@ -10,6 +10,7 @@ const displayArea = document.getElementById("display-area");
 
 // setUp
 const API_ADDRESS = "http://127.0.0.1:8000";
+// const API_ADDRESS = "https://www.pythonanywhere.com/user/shalomavi/files/home/shalomavi/recipe_server/main.py";
 const RECIPES_ROUTE = "/recipes";
 let recipe_dates = [
     ['2023-09-12', "pasta"]
@@ -62,6 +63,7 @@ function renderRecipe(recipe) {
     const stepsTitle = document.createElement("h3");
     stepsTitle.innerHTML = "Steps";
     const steps = document.createElement("p");
+    console.log(recipe.steps);
     const newStepsDigits = addNewLineBeforeNumbers(recipe.steps);
     steps.className = "steps";
     steps.innerHTML = newStepsDigits;
@@ -229,6 +231,7 @@ async function updateRecipe(recipeId) {
             steps: updatedSteps,
             url: updatedUrl
         }
+        console.log(updatedRecipe);
         routeId = `/${recipeId}`;
         await fetch(API_ADDRESS + RECIPES_ROUTE + routeId, {
             method: 'PUT',
@@ -322,7 +325,7 @@ async function saveRecipeDate(recipeId) {
 
     // Use PUT request and send the updated recipe data as JSON
     try {
-        const response = await fetch(`${API_ADDRESS}${RECIPES_ROUTE}/save_date${routeId}`, {
+        const response = await fetch(`${API_ADDRESS}${RECIPES_ROUTE}/${recipeId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
