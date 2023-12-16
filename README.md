@@ -7,11 +7,11 @@ This Recipe App is a delightful platform built using HTML, CSS, and JS, offering
 
 
 ## 🚀 Features
-- **🔐User Authentication:**  Secure login and registration system to access and manage your recipes hassle-free.
-- 📝**Add and Remove Recipes:**  Easily add new recipes to your collection and remove the ones you no longer need.
-- 🍽️**Recipe Details:**  View comprehensive details about each recipe, including ingredients, instructions, cooking time, and more.
-- 🔍**Search and Filter:**  Effortlessly search and filter recipes based on cuisine, dietary preferences, ingredients, and more.
-- 📱**Responsive Design:**  Ensures a seamless experience across various devices for easy access to your recipes.
+- 🔐 **User Authentication:**  Secure login and registration system to access and manage your recipes hassle-free.
+- 📝 **Add and Remove Recipes:**  Easily add new recipes to your collection and remove the ones you no longer need.
+- 🍽️ **Recipe Details:**  View comprehensive details about each recipe, including ingredients, instructions, cooking time, and more.
+- 🔍 **Search and Filter:**  Effortlessly search and filter recipes based on cuisine, dietary preferences, ingredients, and more.
+- 📱 **Responsive Design:**  Ensures a seamless experience across various devices for easy access to your recipes.
 
 ## 🛠️ Installation
 
