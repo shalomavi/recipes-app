@@ -30,7 +30,8 @@ Responsive Design: 📱 Ensures a seamless experience across various devices for
    ```
 
 ## 🎬 Usage
-- Run ```sh
+- Run
+   ```sh
    python main.py
    ```
 - Access the application through [website](https://shalomavi.github.io/recipes_app/) for user usage only.
