@@ -35,7 +35,7 @@ This Recipe App is a delightful platform built using HTML, CSS, and JS, offering
    ```sh
    python main.py
    ```
-- Access the application through [website](https://shalomavi.github.io/recipes_app/) for user usage only.
+- Access the application through this [website](https://shalomavi.github.io/recipes_app/) or in your local machine.
 - Start managing your favorite recipes by adding, removing, and exploring the collection.🍿🎉
 
 ## 🤝 Contributing
