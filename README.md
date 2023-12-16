@@ -30,9 +30,10 @@ Responsive Design: 📱 Ensures a seamless experience across various devices for
    ```
 
 ## 🎬 Usage
-
-- Go to [website](https://shalomavi.github.io/recipes_app/) for user usage only.
-- Access the application through your web browser by navigating to `http://localhost:8000`.
+- Run ```sh
+   python main.py
+   ```
+- Access the application through [website](https://shalomavi.github.io/recipes_app/) for user usage only.
 - Start managing your favorite recipes by adding, removing, and exploring the collection.🍿🎉
 
 ## 🤝 Contributing
