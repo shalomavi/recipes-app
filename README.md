@@ -1,5 +1,5 @@
 
-## 🍳 Recipes_App 🥘
+## 🍳 Recipe Keeper 🥘
 This Recipe App is a delightful platform built using HTML, CSS, and JS, offering an intuitive interface to handle and display your favorite recipes.
 
 ## 🌟 Example Preview
