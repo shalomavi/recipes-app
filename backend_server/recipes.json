@@ -8,44 +8,19 @@
             " salt",
             " sauce"
         ],
-        "steps": "1. Boil water\n2. Prepare sauce\n3. Cook pasta\n4. Serve",
-        "url": "https://www.thecountrycook.net/wp-content/uploads/2023/02/thumbnail-Penne-Pasta-with-Tomato-Sauce-scaled.jpg"
+        "steps": "1. Boil water<br>2. Prepare sauce<br>3. Cook pasta <br>4. Serve",
+        "url": "https://www.thecountrycook.net/wp-content/uploads/2023/02/thumbnail-Penne-Pasta-with-Tomato-Sauce-scaled.jpg",
+        "recipe_date": "2023-12-06"
     },
     {
         "id": 2,
         "name": "Veggies",
         "ingredients": [
-            "veg",
-            " healthy"
+            "sd",
+            "S"
         ],
-        "steps": "1.plant2.eat",
-        "url": "https://domf5oio6qrcr.cloudfront.net/medialibrary/10200/GettyImages-1208790371.jpg"
-    },
-    {
-        "id": 3,
-        "name": "",
-        "ingredients": [
-            "d"
-        ],
-        "steps": "",
-        "url": ""
-    },
-    {
-        "id": 4,
-        "name": "pasta",
-        "ingredients": [
-            ""
-        ],
-        "steps": "",
-        "url": ""
-    },
-    {
-        "id": 5,
-        "name": "s",
-        "ingredients": [
-            ""
-        ],
-        "steps": "",
-        "url": ""
+        "steps": "1.plant.<br>2.eat",
+        "url": "https://domf5oio6qrcr.cloudfront.net/medialibrary/10200/GettyImages-1208790371.jpg",
+        "recipe_date": "2023-12-08"
     }
 ]
