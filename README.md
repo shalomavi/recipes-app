@@ -3,7 +3,8 @@
 This Recipe App is a delightful platform built using HTML, CSS, and JS, offering an intuitive interface to handle and display your favorite recipes.
 
 ## 🌟 Example Preview
-recipebox_app_screenshot
+![Rcipes_screenshot](https://github.com/shalomavi/recipes_app/assets/85420763/a06c0882-95dd-42a1-9b5a-7fbbced886cd "recipes_app_screenshot")
+
 
 ## 🚀 Features
 User Authentication: 🔐 Secure login and registration system to access and manage your recipes hassle-free.
