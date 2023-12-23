@@ -9,7 +9,8 @@ const displayAreaDiv = document.getElementById("displayAreaDiv");
 const displayArea = document.getElementById("display-area");
 
 // setUp
-const API_ADDRESS = "http://0.0.0.0:5001";
+// const API_ADDRESS = "https://recipe-app-i8yd.onrender.com";
+const API_ADDRESS = "http://localhost:8001";
 // const API_ADDRESS = "https://www.pythonanywhere.com/user/shalomavi/files/home/shalomavi/recipe_server/main.py";
 const RECIPES_ROUTE = "/recipes";
 let recipe_dates = [
